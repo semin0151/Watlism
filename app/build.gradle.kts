@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.semin.watlism"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -28,7 +28,7 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     buildFeatures {
         compose = true
