@@ -1,4 +1,4 @@
-package com.semin.watlism.presentation
+package com.semin.watlism.data.network
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.semin.watlism.presentation.test", appContext.packageName)
+        assertEquals("com.semin.watlism.data.network.test", appContext.packageName)
     }
 }

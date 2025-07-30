@@ -20,7 +20,10 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Watlism"
+
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-include(":domain")
 include(":data")
-include(":presentation")
+include(":data:network")
+include(":domain")
+include(":feature:home")

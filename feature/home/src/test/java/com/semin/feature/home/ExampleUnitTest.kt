@@ -1,4 +1,4 @@
-package com.semin.watlism.presentation
+package com.semin.feature.home
 
 import org.junit.Test
 

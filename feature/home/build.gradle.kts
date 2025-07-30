@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.semin.watlism.presentation"
+    namespace = "com.semin.feature.home"
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 26
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -33,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.domain)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
