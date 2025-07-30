@@ -27,6 +27,10 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
@@ -36,6 +40,10 @@ android {
 }
 
 dependencies {
+    implementation(projects.data)
+    implementation(projects.data.network)
+    implementation(projects.domain)
+    implementation(projects.feature.home)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
