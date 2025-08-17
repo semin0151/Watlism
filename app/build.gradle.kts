@@ -41,8 +41,10 @@ android {
 
 dependencies {
     implementation(projects.data)
+    implementation(projects.data.database)
     implementation(projects.data.network)
     implementation(projects.domain)
+    implementation(projects.feature.core)
     implementation(projects.feature.home)
 
     implementation(libs.androidx.core.ktx)
