@@ -44,8 +44,8 @@ android {
 
 dependencies {
     implementation(projects.data)
+    implementation(projects.data.api)
     implementation(projects.data.database)
-    implementation(projects.data.network)
     implementation(projects.domain)
     implementation(projects.feature.core)
     implementation(projects.feature.home)

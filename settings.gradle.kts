@@ -24,7 +24,7 @@ rootProject.name = "Watlism"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":data")
-include(":data:network")
+include(":data:api")
 include(":domain")
 include(":feature:home")
 include(":feature:core")
