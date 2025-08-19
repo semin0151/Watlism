@@ -1,4 +1,4 @@
-package com.semin.watlism.ui.theme
+package com.semin.watlism.feature.core.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

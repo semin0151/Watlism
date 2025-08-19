@@ -1,4 +1,4 @@
-package com.semin.watlism.ui.theme
+package com.semin.watlism.feature.core.theme
 
 import androidx.compose.ui.graphics.Color
 
