@@ -9,9 +9,11 @@ lifecycleRuntimeKtx = "2.9.0"
 jetbrainsKotlinJvm = "2.0.21"
 junit = "4.13.2"
 junitVersion = "1.2.1"
-kotlin = "2.1.20"
+kotlin = "2.0.21"
 ksp = "2.0.21-1.0.28"
 material = "1.12.0"
+kotlinxCoroutines = "1.7.3"
+kotlinxSerialization = "1.7.3"
 kotlinDatetime = "0.7.1"
 
 [libraries]
@@ -30,7 +32,9 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinDatetime" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
