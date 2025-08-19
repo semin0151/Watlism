@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.semin.watlism.database"
+    namespace = "com.semin.watlism.data.database"
     compileSdk = 35
 
     defaultConfig {

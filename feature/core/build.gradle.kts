@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.semin.watlism.core"
+    namespace = "com.semin.watlism.feature.core"
     compileSdk = 35
 
     defaultConfig {

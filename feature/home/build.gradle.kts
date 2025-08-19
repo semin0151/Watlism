@@ -2,10 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.semin.feature.home"
+    namespace = "com.semin.watlism.feature.home"
     compileSdk = 35
 
     defaultConfig {
