@@ -57,9 +57,9 @@ fun HomeScreen(
     }
 
     if (uiState.isError) {
-
+        // todo set error ui
     } else if(uiState.isLoading) {
-
+        // todo add loading indicator
     } else {
         TrendingTitlesContent(
             modifier = modifier,
@@ -73,6 +73,7 @@ fun TrendingTitlesContent(
     modifier: Modifier = Modifier,
     trendingTitles: List<Title>
 ) {
+    // todo refactor
     val realCount = trendingTitles.size
     val startPosition = remember(realCount) {
         val mid = Int.MAX_VALUE.div(2)
@@ -114,6 +115,7 @@ fun TrendingItemCard(
     title: Title,
     onClick: () -> Unit,
 ) {
+    // todo refactor
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
     val imageHeight = (screenWidth * 1.465F)
