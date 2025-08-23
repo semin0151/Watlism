@@ -1,7 +1,5 @@
 package com.semin.watlism.feature.home
 
-import android.R.attr.scaleX
-import android.R.attr.scaleY
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -40,7 +37,6 @@ import androidx.compose.ui.util.lerp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.Series
@@ -142,12 +138,13 @@ fun TrendingItemCard(
     // todo refactor
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    val imageHeight = (screenWidth * 1.465F)
+    val imageWidth = screenWidth.minus(32.dp)
+    val imageHeight = (imageWidth * 1.465F)
 
     Card(
         onClick = onClick,
         modifier = modifier
-            .width(screenWidth - 32.dp)
+            .width(imageWidth)
             .height(imageHeight)
     ) {
         Box(
