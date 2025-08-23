@@ -58,8 +58,8 @@ data class TitleDto(
     @SerialName("origin_country")
     val originCountry: List<String>? = null // 시리즈 전용
 ) {
-    val backdropUrl = "${ApiConfig.TMDB_ORIGINAL_IMAGE_URL}${backdropPath}"
-    val posterUrl = "${ApiConfig.TMDB_ORIGINAL_IMAGE_URL}${posterPath}"
+    val backdropUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${backdropPath}"
+    val posterUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${posterPath}"
 
     fun toTitleData(): TitleData {
         return TitleData(
