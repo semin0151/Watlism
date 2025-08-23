@@ -1,5 +1,7 @@
 package com.semin.watlism.feature.home
 
+import android.R.attr.scaleX
+import android.R.attr.scaleY
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,12 +29,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.lerp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
@@ -44,6 +49,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.format
 import kotlinx.datetime.format.char
 import java.util.Locale
+import kotlin.math.absoluteValue
 
 @Composable
 fun HomeScreen(
@@ -58,7 +64,7 @@ fun HomeScreen(
 
     if (uiState.isError) {
         // todo set error ui
-    } else if(uiState.isLoading) {
+    } else if (uiState.isLoading) {
         // todo add loading indicator
     } else {
         TrendingTitlesContent(
@@ -96,12 +102,30 @@ fun TrendingTitlesContent(
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxWidth(),
-            pageSpacing = 16.dp,
             contentPadding = PaddingValues(horizontal = 32.dp),
             beyondViewportPageCount = 1,
             key = { page -> trendingTitles[page.mod(realCount)].id.value }
         ) { page ->
+            val pageOffset =
+                ((pagerState.currentPage - page) + pagerState.currentPageOffsetFraction).absoluteValue.coerceIn(
+                    0f,
+                    1f
+                )
+
+            val scale = lerp(0.9f, 1f, 1f - pageOffset)
+            val alpha = lerp(0.6f, 1f, 1f - pageOffset)
+
+            // 가운데 카드가 z-order 위로 오게
+            val z = lerp(0f, 1f, 1f - pageOffset)
+
             TrendingItemCard(
+                modifier = Modifier
+                    .zIndex(z)
+                    .graphicsLayer {
+                        scaleX = scale
+                        scaleY = scale
+                        this.alpha = alpha
+                    },
                 title = trendingTitles[page.mod(realCount)],
                 onClick = { },
             )
@@ -123,7 +147,7 @@ fun TrendingItemCard(
     Card(
         onClick = onClick,
         modifier = modifier
-            .width(screenWidth - 64.dp)
+            .width(screenWidth - 32.dp)
             .height(imageHeight)
     ) {
         Box(
@@ -161,15 +185,25 @@ fun TrendingItemCard(
                     .padding(12.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = when (title) {
-                        is Movie -> { Color.Red.copy(alpha = 0.8f) }
-                        is Series -> { Color.Blue.copy(alpha = 0.8f) }
+                        is Movie -> {
+                            Color.Red.copy(alpha = 0.8f)
+                        }
+
+                        is Series -> {
+                            Color.Blue.copy(alpha = 0.8f)
+                        }
                     }
                 )
             ) {
                 Text(
                     text = when (title) {
-                        is Movie -> { "영화" }
-                        is Series -> { "시리즈" }
+                        is Movie -> {
+                            "영화"
+                        }
+
+                        is Series -> {
+                            "시리즈"
+                        }
                     },
                     color = Color.White,
                     style = MaterialTheme.typography.labelSmall,
