@@ -4,7 +4,7 @@ import com.semin.watlism.domain.value.Rating
 import com.semin.watlism.domain.value.TitleId
 import com.semin.watlism.domain.value.Url
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalTime
+import kotlin.time.Duration
 
 sealed interface Title {
     val id: TitleId
@@ -30,7 +30,7 @@ data class Movie(
     override val longDescription: String,
     override val crews: List<Credit>,
     override val actors: List<Credit>,
-    val runningTime: LocalTime,
+    val runningTime: Duration,
 ) : Title
 
 data class Series(

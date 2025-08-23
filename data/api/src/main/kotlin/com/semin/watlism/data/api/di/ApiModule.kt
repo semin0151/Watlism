@@ -1,13 +1,19 @@
 package com.semin.watlism.data.api.di
 
+import com.semin.watlism.data.api.api.TmdbTrendingApi
 import com.semin.watlism.data.api.config.ApiConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import retrofit2.create
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
@@ -27,10 +33,31 @@ object ApiModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideJson(): Json = Json {
+        ignoreUnknownKeys = true
+        coerceInputValues = true
+    }
+
+    @TmdbRetrofit
+    @Provides
+    @Singleton
+    fun provideTmdbRetrofit(okHttpClient: OkHttpClient, json: Json): Retrofit {
         return Retrofit.Builder()
             .baseUrl(ApiConfig.TMDB_BASE_URL)
             .client(okHttpClient)
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideTmdbTrendingApi(
+        @TmdbRetrofit retrofit: Retrofit
+    ): TmdbTrendingApi {
+        return retrofit.create<TmdbTrendingApi>()
+    }
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class TmdbRetrofit

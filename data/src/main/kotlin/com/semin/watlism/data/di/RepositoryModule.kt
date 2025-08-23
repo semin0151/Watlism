@@ -1,0 +1,20 @@
+package com.semin.watlism.data.di
+
+import com.semin.watlism.data.repository.TitleRepositoryImpl
+import com.semin.watlism.domain.repository.TitleRepository
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindsTitleRepository(
+        repositoryImpl: TitleRepositoryImpl
+    ): TitleRepository
+}
