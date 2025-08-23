@@ -20,7 +20,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -54,9 +56,16 @@ fun HomeScreen(
         viewModel.syncData()
     }
 
-    TrendingTitlesContent(
-        trendingTitles = uiState.trendingTitles
-    )
+    if (uiState.isError) {
+
+    } else if(uiState.isLoading) {
+
+    } else {
+        TrendingTitlesContent(
+            modifier = modifier,
+            trendingTitles = uiState.trendingTitles
+        )
+    }
 }
 
 @Composable
@@ -64,7 +73,15 @@ fun TrendingTitlesContent(
     modifier: Modifier = Modifier,
     trendingTitles: List<Title>
 ) {
-    val pagerState = rememberPagerState(pageCount = { trendingTitles.size })
+    val realCount = trendingTitles.size
+    val startPosition = remember(realCount) {
+        val mid = Int.MAX_VALUE.div(2)
+        mid - (mid.mod(realCount))
+    }
+    val pagerState = rememberPagerState(
+        initialPage = startPosition,
+        pageCount = { Int.MAX_VALUE }
+    )
 
     Column(modifier = modifier) {
         Column(
@@ -79,10 +96,12 @@ fun TrendingTitlesContent(
             state = pagerState,
             modifier = Modifier.fillMaxWidth(),
             pageSpacing = 16.dp,
-            contentPadding = PaddingValues(horizontal = 32.dp)
+            contentPadding = PaddingValues(horizontal = 32.dp),
+            beyondViewportPageCount = 1,
+            key = { page -> trendingTitles[page.mod(realCount)].id.value }
         ) { page ->
             TrendingItemCard(
-                title = trendingTitles[page],
+                title = trendingTitles[page.mod(realCount)],
                 onClick = { },
             )
         }
@@ -97,7 +116,6 @@ fun TrendingItemCard(
 ) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
-    // 포스터 비율 (2:3)에 맞춰 높이 계산
     val imageHeight = (screenWidth * 1.465F)
 
     Card(
@@ -117,28 +135,8 @@ fun TrendingItemCard(
                 contentDescription = title.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize(),
-                onState = {
-                    when (it) {
-                        AsyncImagePainter.State.Empty -> {
-                            Logs.e("AsyncImage:onState:${it}")
-                        }
-
-                        is AsyncImagePainter.State.Error -> {
-                            Logs.e("AsyncImage:onState:${it.result.throwable}")
-                        }
-
-                        is AsyncImagePainter.State.Loading -> {
-                            Logs.e("AsyncImage:onState:${it}")
-                        }
-
-                        is AsyncImagePainter.State.Success -> {
-                            Logs.e("AsyncImage:onState:${it.result}")
-                        }
-                    }
-                }
             )
 
-            // 반투명 그라데이션 오버레이
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -155,32 +153,21 @@ fun TrendingItemCard(
                     )
             )
 
-            // 미디어 타입 표시 배지
             Card(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
                     .padding(12.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = when (title) {
-                        is Movie -> {
-                            Color.Red.copy(alpha = 0.8f)
-                        }
-
-                        is Series -> {
-                            Color.Blue.copy(alpha = 0.8f)
-                        }
+                        is Movie -> { Color.Red.copy(alpha = 0.8f) }
+                        is Series -> { Color.Blue.copy(alpha = 0.8f) }
                     }
                 )
             ) {
                 Text(
                     text = when (title) {
-                        is Movie -> {
-                            "영화"
-                        }
-
-                        is Series -> {
-                            "시리즈"
-                        }
+                        is Movie -> { "영화" }
+                        is Series -> { "시리즈" }
                     },
                     color = Color.White,
                     style = MaterialTheme.typography.labelSmall,
