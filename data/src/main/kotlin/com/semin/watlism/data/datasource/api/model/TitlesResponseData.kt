@@ -42,7 +42,7 @@ data class TitleData(
     val voteCount: Int,
     val originCountry: List<String>? = null
 ) {
-    fun toTitle(): Title {
+    fun toTitle(): Title? {
         return when (mediaType) {
             MediaType.movie -> {
                 Movie(
@@ -77,10 +77,12 @@ data class TitleData(
                     airingStatus = AiringStatus.OnAir,
                 )
             }
+
+            MediaType.person -> null
         }
     }
 }
 
 enum class MediaType {
-    movie, tv
+    movie, tv, person
 }

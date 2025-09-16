@@ -14,7 +14,7 @@ class TitleRepositoryImpl @Inject constructor(
         return flow {
             trendingApiDataSource.getAll().run {
                 if (isSuccess) {
-                   emit(this.getOrNull()?.results?.map { it.toTitle() } ?: emptyList())
+                   emit(this.getOrNull()?.results?.mapNotNull { it.toTitle() } ?: emptyList())
                 } else {
                     exceptionOrNull()?.let { throw it }
                 }

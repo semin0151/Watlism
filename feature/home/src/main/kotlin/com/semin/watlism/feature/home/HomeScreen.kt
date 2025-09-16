@@ -47,7 +47,6 @@ import coil.request.ImageRequest
 import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.Title
 import com.semin.watlism.domain.value.TitleId
-import com.semin.watlism.feature.core.Logs
 import kotlinx.datetime.format
 import kotlin.math.absoluteValue
 
@@ -320,9 +319,6 @@ fun MovieItemCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(160.dp),
-                onState = {
-                    Logs.e("${it}")
-                },
             )
         }
     }

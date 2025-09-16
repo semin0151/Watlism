@@ -18,15 +18,15 @@ data class TitleDto(
     val originalTitle: String? = null,
     @SerialName("original_name")
     val originalName: String? = null,
-    val overview: String,
+    val overview: String? = null,
     @SerialName("poster_path")
     val posterPath: String? = null,
     @SerialName("media_type")
     val mediaType: String,
     @SerialName("original_language")
-    val originalLanguage: String,
+    val originalLanguage: String? = null,
     @SerialName("genre_ids")
-    val genreIds: List<Int>,
+    val genreIds: List<Int>? = null,
     val popularity: Double,
     @SerialName("release_date")
     val releaseDate: String? = null,
@@ -34,9 +34,9 @@ data class TitleDto(
     val firstAirDate: String? = null,
     val video: Boolean? = null,
     @SerialName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double? = null,
     @SerialName("vote_count")
-    val voteCount: Int,
+    val voteCount: Int? = null,
     @SerialName("origin_country")
     val originCountry: List<String>? = null
 ) {
@@ -53,18 +53,18 @@ data class TitleDto(
             name = name,
             originalTitle = originalTitle,
             originalName = originalName,
-            overview = overview,
+            overview = overview ?: "",
             posterPath = posterPath,
             posterUrl = posterUrl,
             mediaType = MediaType.valueOf(mediaType),
-            originalLanguage = originalLanguage,
-            genreIds = genreIds,
+            originalLanguage = originalLanguage ?: "",
+            genreIds = genreIds ?: emptyList(),
             popularity = popularity,
             releaseDate = releaseDate,
             firstAirDate = firstAirDate,
             video = video,
-            voteAverage = voteAverage,
-            voteCount = voteCount,
+            voteAverage = voteAverage ?: 0.0,
+            voteCount = voteCount ?: 0,
             originCountry = originCountry,
         )
     }
