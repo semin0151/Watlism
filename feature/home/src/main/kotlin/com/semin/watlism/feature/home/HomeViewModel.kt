@@ -3,6 +3,7 @@ package com.semin.watlism.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.semin.watlism.domain.repository.TitleRepository
+import com.semin.watlism.feature.core.Logs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

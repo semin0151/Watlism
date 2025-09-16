@@ -1,4 +1,4 @@
-package com.semin.watlism.feature.home
+package com.semin.watlism.feature.core
 
 import android.util.Log
 
