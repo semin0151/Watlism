@@ -3,7 +3,6 @@ package com.semin.watlism.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.semin.watlism.domain.repository.TitleRepository
-import com.semin.watlism.feature.core.Logs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,10 +25,9 @@ class HomeViewModel @Inject constructor(
 
     fun syncData() {
         titleRepository.getTrendingAll()
-            .onStart { Logs.e("test:onStart") }
-            .onCompletion { Logs.e("test:onCompletion") }
+            .onStart { _uiState.update { it.copy(isLoading = true, isError = false) } }
+            .onCompletion { _uiState.update { it.copy(isLoading = false) } }
             .onEach { trendingTitles ->
-                Logs.e("test:onEach:${trendingTitles.joinToString("\n")}")
                 _uiState.update {
                     it.copy(
                         trendingTitles = trendingTitles,
@@ -37,7 +35,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
-            .catch { Logs.e("test:catch:$it") }
+            .catch { _uiState.update { it.copy(isError = true) } }
             .launchIn(viewModelScope)
     }
 }

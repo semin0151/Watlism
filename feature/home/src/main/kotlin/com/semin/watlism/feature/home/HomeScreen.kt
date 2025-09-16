@@ -42,7 +42,6 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.semin.watlism.domain.model.Title
 import kotlinx.datetime.format
-import java.util.Locale
 import kotlin.math.absoluteValue
 
 @Composable
@@ -73,7 +72,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun TrendingTitlesContent(
+private fun TrendingTitlesContent(
     modifier: Modifier = Modifier,
     trendingTitles: List<Title>
 ) {
@@ -147,14 +146,12 @@ private fun HomeHeader(
 }
 
 @Composable
-fun TrendingItemCard(
+private fun TrendingItemCard(
     modifier: Modifier = Modifier,
     title: Title,
     onClick: () -> Unit,
 ) {
-    // todo refactor
-    val configuration = LocalConfiguration.current
-    val screenWidth = configuration.screenWidthDp.dp
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val imageWidth = screenWidth.minus(32.dp)
     val imageHeight = (imageWidth * 1.465F)
 
