@@ -37,3 +37,12 @@ val YYYYMMDD_DOTS_FORMAT: DateTimeFormat<LocalDate>
         char('.')
         day()
     }
+
+val YYYYMMDD_HYPHENS_FORMAT: DateTimeFormat<LocalDate>
+    get() = LocalDate.Format {
+        year()
+        char('-')
+        monthNumber()
+        char('-')
+        day()
+    }

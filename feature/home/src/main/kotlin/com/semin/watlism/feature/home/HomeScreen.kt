@@ -1,6 +1,7 @@
 package com.semin.watlism.feature.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,6 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -40,7 +44,10 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.Title
+import com.semin.watlism.domain.value.TitleId
+import com.semin.watlism.feature.core.Logs
 import kotlinx.datetime.format
 import kotlin.math.absoluteValue
 
@@ -63,10 +70,26 @@ fun HomeScreen(
         } else if (uiState.isLoading) {
             // todo add loading indicator
         } else {
-            TrendingTitlesContent(
-                modifier = modifier,
-                trendingTitles = uiState.trendingTitles
-            )
+            LazyColumn {
+                item {
+                    if (uiState.trendingTitles.isNotEmpty()) {
+                        TrendingTitlesContent(
+                            modifier = modifier,
+                            trendingTitles = uiState.trendingTitles
+                        )
+                    }
+                }
+
+                item {
+                    if (uiState.popularMovies.isNotEmpty()) {
+                        MovieSection(
+                            title = "인기 영화",
+                            movies = uiState.popularMovies,
+                            onMovieClick = {}
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -86,7 +109,7 @@ private fun TrendingTitlesContent(
             beyondViewportPageCount = 1,
             key = { page -> trendingTitles[page.mod(trendingTitles.size)].id.value }
         ) { page ->
-            TrendingItemCard(
+            LargeTitleCard(
                 modifier = Modifier
                     .infinityPagerSideItem(
                         pagerState = pagerState,
@@ -146,7 +169,7 @@ private fun HomeHeader(
 }
 
 @Composable
-private fun TrendingItemCard(
+private fun LargeTitleCard(
     modifier: Modifier = Modifier,
     title: Title,
     onClick: () -> Unit,
@@ -241,6 +264,66 @@ private fun TrendingItemCard(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun MovieSection(
+    title: String,
+    movies: List<Movie>,
+    onMovieClick: (TitleId) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(top = 16.dp)
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(bottom = 8.dp).padding(horizontal = 16.dp)
+        )
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp)
+        ) {
+            items(movies) { movie ->
+                MovieItemCard(
+                    movie = movie,
+                    onClick = { onMovieClick(movie.id) }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun MovieItemCard(
+    movie: Movie,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        onClick = onClick,
+        modifier = modifier.width(120.dp)
+    ) {
+        Column {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(movie.posterUrl.value)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = movie.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(160.dp),
+                onState = {
+                    Logs.e("${it}")
+                },
+            )
         }
     }
 }

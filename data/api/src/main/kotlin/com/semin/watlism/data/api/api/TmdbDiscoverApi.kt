@@ -2,7 +2,6 @@ package com.semin.watlism.data.api.api
 
 import com.semin.watlism.data.api.config.ApiConfig
 import com.semin.watlism.data.api.dto.MovieResponseDto
-import com.semin.watlism.data.api.dto.TitlesResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -51,12 +50,10 @@ interface TmdbDiscoverApi {
         @Query("without_watch_providers") withoutWatchProviders: String? = null,
         @Query("year") year: Int? = null
     ): Response<MovieResponseDto>
-}
 
-/**
- * @Query("api_key") apiKey: String,
- * @Query("sort_by") sortBy: String = "popularity.desc",
- * @Query("primary_release_date.gte") primaryReleaseDateGte: String,
- * @Query("language") language: String = "ko-KR",
- * @Query("page") page: Int = 1
- */
+    @GET("discover/tv")
+    suspend fun getSeries(
+        @Header("Authorization") bearerToken: String = ApiConfig.BEARER_TOKEN,
+        @Query("air_date.gte") airDateGte: String? = null,
+    ): Response<Unit>
+}

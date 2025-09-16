@@ -11,11 +11,11 @@ class DiscoverApiDataSourceImpl @Inject constructor(
     private val tmdbDiscoverApi: TmdbDiscoverApi,
 ) : DiscoverApiDataSource {
     override suspend fun getPopularMovies(
-        primaryReleaseYear: Int
+        primaryReleaseDate: String
     ): Result<MovieResponseData> {
         return tmdbDiscoverApi.getMovie(
             sortBy = SortBy.PopularityDesc.value,
-            primaryReleaseYear = primaryReleaseYear,
+            primaryReleaseDateGte = primaryReleaseDate,
         ).run {
             if (isSuccessful) {
                 val body = this.body()

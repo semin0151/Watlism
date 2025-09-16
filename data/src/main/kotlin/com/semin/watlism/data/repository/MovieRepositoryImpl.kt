@@ -10,10 +10,10 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val discoverApiDataSource: DiscoverApiDataSource,
 ) : MovieRepository {
-    override fun getPopularMovies(releaseYear: Int): Flow<List<Movie>> {
+    override fun getPopularMovies(releaseDate: String): Flow<List<Movie>> {
         return flow {
             discoverApiDataSource.getPopularMovies(
-                primaryReleaseYear = releaseYear
+                primaryReleaseDate = releaseDate
             ).run {
                 if (isSuccess) {
                     emit(this.getOrNull()?.results?.map { it.toMovie() } ?: emptyList())

@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -28,8 +26,6 @@ class HomeViewModel @Inject constructor(
 
     fun syncData() {
         titleRepository.getTrendingAll()
-            .onStart { _uiState.update { it.copy(isLoading = true, isError = false) } }
-            .onCompletion { _uiState.update { it.copy(isLoading = false) } }
             .onEach { trendingTitles ->
                 _uiState.update {
                     it.copy(
@@ -38,13 +34,18 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
-            .catch { _uiState.update { it.copy(isError = true) } }
+            .catch { Logs.e(it.message.toString()) }
             .launchIn(viewModelScope)
 
-        movieRepository.getPopularMovies(releaseYear = 2020)
-            .onStart {}
-            .onCompletion {  }
-            .onEach { Logs.e(it.joinToString("\n") { r -> r.toString() }) }
+        movieRepository.getPopularMovies(releaseDate = "2020-01-01")
+            .onEach { popularMovies ->
+                _uiState.update {
+                    it.copy(
+                        popularMovies = popularMovies,
+                        isLoading = false
+                    )
+                }
+            }
             .catch { Logs.e(it.message.toString()) }
             .launchIn(viewModelScope)
     }

@@ -4,5 +4,5 @@ import com.semin.watlism.domain.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    fun getPopularMovies(releaseYear: Int): Flow<List<Movie>>
+    fun getPopularMovies(releaseDate: String): Flow<List<Movie>>
 }
