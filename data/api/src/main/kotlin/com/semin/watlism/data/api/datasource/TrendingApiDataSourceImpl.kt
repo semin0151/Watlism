@@ -11,11 +11,11 @@ class TrendingApiDataSourceImpl @Inject constructor(
 ) : TrendingApiDataSource {
     override suspend fun getAll(): Result<TitlesResponseData> {
         return tmdbTrendingApi.getAll(timeWindow = "day", language = "ko-KR").run {
-            if(isSuccessful) {
+            if (isSuccessful) {
                 val body = this.body()
 
-                if(body == null) {
-                    Result.failure(IllegalStateException(""))
+                if (body == null) {
+                    Result.failure(IllegalStateException("Body is null."))
                 } else {
                     Result.success(body.toTitlesResponseData())
                 }

@@ -1,6 +1,8 @@
 package com.semin.watlism.data.di
 
+import com.semin.watlism.data.repository.MovieRepositoryImpl
 import com.semin.watlism.data.repository.TitleRepositoryImpl
+import com.semin.watlism.domain.repository.MovieRepository
 import com.semin.watlism.domain.repository.TitleRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindsTitleRepository(
         repositoryImpl: TitleRepositoryImpl
     ): TitleRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsMovieRepository(
+        repositoryImpl: MovieRepositoryImpl
+    ): MovieRepository
 }

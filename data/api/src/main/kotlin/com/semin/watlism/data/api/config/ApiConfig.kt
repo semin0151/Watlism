@@ -10,3 +10,7 @@ object ApiConfig {
     const val TMDB_SAMPLING_IMAGE_URL = "${TMDB_IMAGE_URL}w780"
     const val BEARER_TOKEN = "Bearer ${BuildConfig.ACCESS_TOKEN}"
 }
+
+enum class SortBy(val value: String) {
+    PopularityDesc("popularity.desc")
+}

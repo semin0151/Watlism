@@ -8,7 +8,6 @@ import com.semin.watlism.domain.value.Rating
 import com.semin.watlism.domain.value.TitleId
 import com.semin.watlism.domain.value.Url
 import kotlinx.datetime.LocalDate
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.time.Duration
 
@@ -25,23 +24,23 @@ data class TitleData(
     val backdropPath: String? = null,
     val backdropUrl: String,
     val id: Long,
-    val title: String? = null,              // 영화일 때
-    val name: String? = null,               // 시리즈일 때
-    val originalTitle: String? = null,      // 영화 원제
-    val originalName: String? = null,       // 시리즈 원제
+    val title: String? = null,
+    val name: String? = null,
+    val originalTitle: String? = null,
+    val originalName: String? = null,
     val overview: String,
     val posterPath: String? = null,
     val posterUrl: String,
-    val mediaType: MediaType,           // "movie" or "tv"
+    val mediaType: MediaType,
     val originalLanguage: String,
     val genreIds: List<Int>,
     val popularity: Double,
-    val releaseDate: String? = null,        // 영화일 때
-    val firstAirDate: String? = null,       // 시리즈일 때
-    val video: Boolean? = null,             // 영화 전용
+    val releaseDate: String? = null,
+    val firstAirDate: String? = null,
+    val video: Boolean? = null,
     val voteAverage: Double,
     val voteCount: Int,
-    val originCountry: List<String>? = null // 시리즈 전용
+    val originCountry: List<String>? = null
 ) {
     fun toTitle(): Title {
         return when (mediaType) {

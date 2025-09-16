@@ -1,22 +1,24 @@
 package com.semin.watlism.data.api.dto
 
-import com.semin.watlism.data.datasource.api.model.TitlesResponseData
+import com.semin.watlism.data.datasource.api.model.MovieResponseData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TitlesResponseDto(
+data class MovieResponseDto(
+    @SerialName("page")
     val page: Int,
-    val results: List<TitleDto>,
+    @SerialName("results")
+    val results: List<MovieDto>,
     @SerialName("total_pages")
     val totalPages: Int,
     @SerialName("total_results")
     val totalResults: Int
 ) {
-    fun toTitlesResponseData() = TitlesResponseData(
+    fun toMovieResponseData() = MovieResponseData(
         page = page,
-        results = results.map { it.toTitleData() },
+        results = results.map { it.toMovieData() },
         totalPages = totalPages,
-        totalResults = totalResults,
+        totalResults = totalResults
     )
 }

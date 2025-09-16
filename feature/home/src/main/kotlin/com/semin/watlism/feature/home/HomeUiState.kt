@@ -12,6 +12,7 @@ import kotlinx.datetime.format.char
 
 data class HomeUiState(
     val trendingTitles: List<Title>,
+    val popularMovies: List<Movie>,
     val isLoading: Boolean,
     val isError: Boolean,
 )

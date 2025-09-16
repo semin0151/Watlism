@@ -1,0 +1,33 @@
+package com.semin.watlism.data.api.datasource
+
+import com.semin.watlism.data.api.api.TmdbDiscoverApi
+import com.semin.watlism.data.api.config.SortBy
+import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
+import com.semin.watlism.data.datasource.api.model.MovieResponseData
+import retrofit2.HttpException
+import javax.inject.Inject
+
+class DiscoverApiDataSourceImpl @Inject constructor(
+    private val tmdbDiscoverApi: TmdbDiscoverApi,
+) : DiscoverApiDataSource {
+    override suspend fun getPopularMovies(
+        primaryReleaseYear: Int
+    ): Result<MovieResponseData> {
+        return tmdbDiscoverApi.getMovie(
+            sortBy = SortBy.PopularityDesc.value,
+            primaryReleaseYear = primaryReleaseYear,
+        ).run {
+            if (isSuccessful) {
+                val body = this.body()
+
+                if (body == null) {
+                    Result.failure(IllegalStateException("Body is null."))
+                } else {
+                    Result.success(body.toMovieResponseData())
+                }
+            } else {
+                Result.failure(HttpException(this))
+            }
+        }
+    }
+}
