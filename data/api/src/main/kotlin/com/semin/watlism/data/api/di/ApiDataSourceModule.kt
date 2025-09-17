@@ -1,8 +1,10 @@
 package com.semin.watlism.data.api.di
 
 import com.semin.watlism.data.api.datasource.DiscoverApiDataSourceImpl
+import com.semin.watlism.data.api.datasource.GenresApiDataSourceImpl
 import com.semin.watlism.data.api.datasource.TrendingApiDataSourceImpl
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
+import com.semin.watlism.data.datasource.api.GenresApiDataSource
 import com.semin.watlism.data.datasource.api.TrendingApiDataSource
 import dagger.Binds
 import dagger.Module
@@ -23,5 +25,11 @@ abstract class ApiDataSourceModule {
     @Singleton
     abstract fun bindsDiscoverApiDataSource(
         dataSourceImpl: DiscoverApiDataSourceImpl
-    ) : DiscoverApiDataSource
+    ): DiscoverApiDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsGenresApiDataSource(
+        dataSourceImpl: GenresApiDataSourceImpl
+    ): GenresApiDataSource
 }

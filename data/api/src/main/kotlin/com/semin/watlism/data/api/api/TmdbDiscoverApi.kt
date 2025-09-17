@@ -53,7 +53,7 @@ interface TmdbDiscoverApi {
     ): Response<MovieResponseDto>
 
     @GET("discover/tv")
-    suspend fun getSeries(
+    suspend fun getTv(
         @Header("Authorization") bearerToken: String = ApiConfig.BEARER_TOKEN,
         @Query("air_date.gte") airDateGte: String? = null,
         @Query("air_date.lte") airDateLte: String? = null,

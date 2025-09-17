@@ -33,7 +33,7 @@ class DiscoverApiDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getPopularSeries(): Result<SeriesResponseData> {
-        return tmdbDiscoverApi.getSeries(
+        return tmdbDiscoverApi.getTv(
             sortBy = SortBy.PopularityDesc.value,
         ).run {
             if (isSuccessful) {
