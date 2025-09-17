@@ -2,6 +2,7 @@ package com.semin.watlism.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.semin.watlism.domain.provider.DateTimeProvider
 import com.semin.watlism.domain.repository.MovieRepository
 import com.semin.watlism.domain.repository.SeriesRepository
 import com.semin.watlism.domain.repository.TitleRepository
@@ -26,6 +27,7 @@ class HomeViewModel @Inject constructor(
     private val titleRepository: TitleRepository,
     private val movieRepository: MovieRepository,
     private val seriesRepository: SeriesRepository,
+    private val dateTimeProvider: DateTimeProvider,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -38,11 +40,6 @@ class HomeViewModel @Inject constructor(
         )
     )
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-
-    @OptIn(ExperimentalTime::class)
-    private val now: LocalDateTime get() = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
-
-    private val startOfFiveYearsAgo: String get() = "${now.year.minus(5)}-01-01"
 
     @OptIn(ExperimentalTime::class)
     fun syncData() {
@@ -58,7 +55,7 @@ class HomeViewModel @Inject constructor(
             .catch { Logs.e(it.message.toString()) }
             .launchIn(viewModelScope)
 
-        movieRepository.getPopularMovies(releaseDate = startOfFiveYearsAgo)
+        movieRepository.getPopularMovies(releaseDate = dateTimeProvider.getFirstOfYearYearsAgo(5))
             .onEach { popularMovies ->
                 _uiState.update {
                     it.copy(

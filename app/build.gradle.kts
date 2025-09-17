@@ -46,6 +46,8 @@ dependencies {
     implementation(projects.data)
     implementation(projects.data.api)
     implementation(projects.data.database)
+    implementation(projects.data.datastore)
+    implementation(projects.data.system)
     implementation(projects.domain)
     implementation(projects.feature.core)
     implementation(projects.feature.home)
