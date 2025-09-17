@@ -10,7 +10,10 @@ class TrendingApiDataSourceImpl @Inject constructor(
     private val tmdbTrendingApi: TmdbTrendingApi
 ) : TrendingApiDataSource {
     override suspend fun getAll(): Result<TitlesResponseData> {
-        return tmdbTrendingApi.getAll(timeWindow = "day", language = "ko-KR").run {
+        return tmdbTrendingApi.getAll(
+            timeWindow = "day",
+            language = "ko-KR"
+        ).run {
             if (isSuccessful) {
                 val body = this.body()
 

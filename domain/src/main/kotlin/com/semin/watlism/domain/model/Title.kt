@@ -44,9 +44,9 @@ data class Series(
     override val longDescription: String,
     override val crews: List<Credit>,
     override val actors: List<Credit>,
-    val seasonCount: Int,
-    val episodeCount: Int,
-    val airingStatus: AiringStatus
+//    val seasonCount: Int,
+//    val episodeCount: Int,
+//    val airingStatus: AiringStatus
 ) : Title
 
 enum class AiringStatus {

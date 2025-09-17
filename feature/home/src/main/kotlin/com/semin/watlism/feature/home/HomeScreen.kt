@@ -44,7 +44,6 @@ import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.Title
 import com.semin.watlism.domain.value.TitleId
 import kotlinx.datetime.format
@@ -69,7 +68,10 @@ fun HomeScreen(
         } else if (uiState.isLoading) {
             // todo add loading indicator
         } else {
-            LazyColumn {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(vertical = 16.dp)
+            ) {
                 item {
                     if (uiState.trendingTitles.isNotEmpty()) {
                         TrendingTitlesContent(
@@ -81,10 +83,20 @@ fun HomeScreen(
 
                 item {
                     if (uiState.popularMovies.isNotEmpty()) {
-                        MovieSection(
-                            title = "인기 영화",
-                            movies = uiState.popularMovies,
-                            onMovieClick = {}
+                        TitleSection(
+                            sectionTitle = "인기 영화",
+                            titles = uiState.popularMovies,
+                            onTitleClick = {}
+                        )
+                    }
+                }
+
+                item {
+                    if (uiState.popularSeries.isNotEmpty()) {
+                        TitleSection(
+                            sectionTitle = "인기 시리즈",
+                            titles = uiState.popularSeries,
+                            onTitleClick = {}
                         )
                     }
                 }
@@ -257,7 +269,7 @@ private fun LargeTitleCard(
                     Spacer(modifier = Modifier.width(16.dp))
 
                     Text(
-                        text = title.createdAt.format(YYYYMMDD_DOTS_FORMAT),
+                        text = title.createdAt.format(YYYYMMDD_DOTS_LOCAL_DATE_FORMAT),
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.8f)
                     )
@@ -268,17 +280,17 @@ private fun LargeTitleCard(
 }
 
 @Composable
-fun MovieSection(
-    title: String,
-    movies: List<Movie>,
-    onMovieClick: (TitleId) -> Unit,
+fun TitleSection(
+    sectionTitle: String,
+    titles: List<Title>,
+    onTitleClick: (TitleId) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(top = 16.dp)
+        modifier = modifier
     ) {
         Text(
-            text = title,
+            text = sectionTitle,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 8.dp).padding(horizontal = 16.dp)
@@ -288,10 +300,10 @@ fun MovieSection(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(movies) { movie ->
-                MovieItemCard(
-                    movie = movie,
-                    onClick = { onMovieClick(movie.id) }
+            items(titles) { movie ->
+                TitleItemCard(
+                    title = movie,
+                    onClick = { onTitleClick(movie.id) }
                 )
             }
         }
@@ -299,8 +311,8 @@ fun MovieSection(
 }
 
 @Composable
-fun MovieItemCard(
-    movie: Movie,
+fun TitleItemCard(
+    title: Title,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -311,10 +323,10 @@ fun MovieItemCard(
         Column {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(movie.posterUrl.value)
+                    .data(title.posterUrl.value)
                     .crossfade(true)
                     .build(),
-                contentDescription = movie.name,
+                contentDescription = title.name,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()

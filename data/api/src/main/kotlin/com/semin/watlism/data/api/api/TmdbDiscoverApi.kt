@@ -2,6 +2,7 @@ package com.semin.watlism.data.api.api
 
 import com.semin.watlism.data.api.config.ApiConfig
 import com.semin.watlism.data.api.dto.MovieResponseDto
+import com.semin.watlism.data.api.dto.SeriesResponseDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -87,5 +88,5 @@ interface TmdbDiscoverApi {
         @Query("without_keywords") withoutKeywords: String? = null,
         @Query("without_watch_providers") withoutWatchProviders: String? = null,
         @Query("with_type") withType: String? = null,
-    ): Response<Unit>
+    ): Response<SeriesResponseDto>
 }

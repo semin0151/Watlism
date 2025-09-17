@@ -13,6 +13,7 @@ import kotlinx.datetime.format.char
 data class HomeUiState(
     val trendingTitles: List<Title>,
     val popularMovies: List<Movie>,
+    val popularSeries: List<Series>,
     val isLoading: Boolean,
     val isError: Boolean,
 )
@@ -29,20 +30,11 @@ val Title.containerColor: Color
         is Series -> Color.Blue.copy(alpha = 0.8f)
     }
 
-val YYYYMMDD_DOTS_FORMAT: DateTimeFormat<LocalDate>
+val YYYYMMDD_DOTS_LOCAL_DATE_FORMAT: DateTimeFormat<LocalDate>
     get() = LocalDate.Format {
         year()
         char('.')
         monthNumber()
         char('.')
-        day()
-    }
-
-val YYYYMMDD_HYPHENS_FORMAT: DateTimeFormat<LocalDate>
-    get() = LocalDate.Format {
-        year()
-        char('-')
-        monthNumber()
-        char('-')
         day()
     }

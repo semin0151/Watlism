@@ -72,9 +72,9 @@ data class TitleData(
                     longDescription = overview,
                     crews = emptyList(),
                     actors = emptyList(),
-                    seasonCount = 0,
-                    episodeCount = 0,
-                    airingStatus = AiringStatus.OnAir,
+//                    seasonCount = 0,
+//                    episodeCount = 0,
+//                    airingStatus = AiringStatus.OnAir,
                 )
             }
 
