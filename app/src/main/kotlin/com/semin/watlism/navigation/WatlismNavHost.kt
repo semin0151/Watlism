@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.semin.watlism.feature.home.HomeRoute
 import com.semin.watlism.feature.home.homeScreen
+import com.semin.watlism.feature.titledetail.navigateToTitleDetail
+import com.semin.watlism.feature.titledetail.titleDetailScreen
 
 @Composable
 fun WatlismNavHost(
@@ -18,6 +20,12 @@ fun WatlismNavHost(
         startDestination = HomeRoute,
         modifier = modifier,
     ) {
-        homeScreen()
+        homeScreen(
+            onTitleClick = { titleId ->
+                navigationController.navigateToTitleDetail(titleId)
+            }
+        )
+
+        titleDetailScreen()
     }
 }

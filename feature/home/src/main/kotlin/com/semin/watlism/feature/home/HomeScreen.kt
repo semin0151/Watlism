@@ -45,13 +45,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.semin.watlism.domain.model.Title
-import com.semin.watlism.domain.value.TitleId
 import kotlinx.datetime.format
 import kotlin.math.absoluteValue
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
+    onTitleClick: (Long) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState: HomeUiState by viewModel.uiState.collectAsState()
@@ -76,7 +76,8 @@ fun HomeScreen(
                     if (uiState.trendingTitles.isNotEmpty()) {
                         TrendingTitlesContent(
                             modifier = modifier,
-                            trendingTitles = uiState.trendingTitles
+                            trendingTitles = uiState.trendingTitles,
+                            onTitleClick = onTitleClick
                         )
                     }
                 }
@@ -128,7 +129,8 @@ fun HomeScreen(
 @Composable
 private fun TrendingTitlesContent(
     modifier: Modifier = Modifier,
-    trendingTitles: List<Title>
+    trendingTitles: List<Title>,
+    onTitleClick: (Long) -> Unit,
 ) {
     val pagerState = getInfinityPagerState(trendingTitles)
 
@@ -147,7 +149,7 @@ private fun TrendingTitlesContent(
                         page = page
                     ),
                 title = trendingTitles[page.mod(trendingTitles.size)],
-                onClick = { },
+                onTitleClick = onTitleClick,
             )
         }
     }
@@ -203,14 +205,16 @@ private fun HomeHeader(
 private fun LargeTitleCard(
     modifier: Modifier = Modifier,
     title: Title,
-    onClick: () -> Unit,
+    onTitleClick: (Long) -> Unit,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val imageWidth = screenWidth.minus(32.dp)
     val imageHeight = (imageWidth * 1.465F)
 
     Card(
-        onClick = onClick,
+        onClick = {
+            onTitleClick.invoke(title.id.value)
+        },
         modifier = modifier
             .width(imageWidth)
             .height(imageHeight)
@@ -303,7 +307,7 @@ private fun LargeTitleCard(
 fun TitleSection(
     sectionTitle: String,
     titles: List<Title>,
-    onTitleClick: (TitleId) -> Unit,
+    onTitleClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -323,7 +327,7 @@ fun TitleSection(
             items(titles) { movie ->
                 TitleItemCard(
                     title = movie,
-                    onClick = { onTitleClick(movie.id) }
+                    onClick = { onTitleClick(movie.id.value) }
                 )
             }
         }
