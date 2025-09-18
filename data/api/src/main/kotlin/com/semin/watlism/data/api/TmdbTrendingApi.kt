@@ -1,4 +1,4 @@
-package com.semin.watlism.data.api.api
+package com.semin.watlism.data.api
 
 import com.semin.watlism.data.api.config.ApiConfig
 import com.semin.watlism.data.api.dto.TitlesResponseDto

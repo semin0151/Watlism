@@ -1,7 +1,7 @@
 package com.semin.watlism.data.api.di
 
-import com.semin.watlism.data.api.api.TmdbDiscoverApi
-import com.semin.watlism.data.api.api.TmdbTrendingApi
+import com.semin.watlism.data.api.TmdbDiscoverApi
+import com.semin.watlism.data.api.TmdbTrendingApi
 import com.semin.watlism.data.api.config.ApiConfig
 import dagger.Module
 import dagger.Provides

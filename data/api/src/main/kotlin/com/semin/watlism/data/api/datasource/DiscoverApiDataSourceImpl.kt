@@ -1,6 +1,6 @@
 package com.semin.watlism.data.api.datasource
 
-import com.semin.watlism.data.api.api.TmdbDiscoverApi
+import com.semin.watlism.data.api.TmdbDiscoverApi
 import com.semin.watlism.data.api.config.SortBy
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
 import com.semin.watlism.data.datasource.api.model.MovieResponseData

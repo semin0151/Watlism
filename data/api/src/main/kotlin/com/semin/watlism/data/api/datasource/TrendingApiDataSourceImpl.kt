@@ -1,6 +1,6 @@
 package com.semin.watlism.data.api.datasource
 
-import com.semin.watlism.data.api.api.TmdbTrendingApi
+import com.semin.watlism.data.api.TmdbTrendingApi
 import com.semin.watlism.data.datasource.api.TrendingApiDataSource
 import com.semin.watlism.data.datasource.api.model.TitlesResponseData
 import retrofit2.HttpException
