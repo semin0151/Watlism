@@ -5,6 +5,7 @@ androidxNavigation = "2.9.3"
 coil = "2.6.0"
 composeBom = "2024.09.00"
 coreKtx = "1.16.0"
+dataStore = "1.1.7"
 espressoCore = "3.6.1"
 hilt = "2.56.2"
 hiltNavigationCompose = "1.2.0"
@@ -38,6 +39,8 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "dataStore" }
+datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "dataStore" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigationCompose" }

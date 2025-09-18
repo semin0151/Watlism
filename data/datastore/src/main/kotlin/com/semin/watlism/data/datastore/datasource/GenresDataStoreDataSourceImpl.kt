@@ -1,9 +1,9 @@
 package com.semin.watlism.data.datastore.datasource
 
-import com.semin.watlism.data.datasource.datastore.GenresDataStoreDataSource
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import javax.inject.Inject
 
 class GenresDataStoreDataSourceImpl @Inject constructor(
-
-): GenresDataStoreDataSource {
-}
+    private val preferenceDataStore: DataStore<Preferences>
+)
