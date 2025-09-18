@@ -1,47 +1,45 @@
-package com.semin.watlism.data.datasource.api.model
+package com.semin.watlism.data.model
 
-import com.semin.watlism.domain.model.Movie
+import com.semin.watlism.domain.model.Series
 import com.semin.watlism.domain.value.Rating
 import com.semin.watlism.domain.value.TitleId
 import com.semin.watlism.domain.value.Url
 import kotlinx.datetime.LocalDate
-import kotlin.time.Duration
 
-data class MovieResponseData(
+data class SeriesResponseData(
     val page: Int,
-    val results: List<MovieData>,
+    val results: List<SeriesData>,
     val totalPages: Int,
     val totalResults: Int
 )
 
-data class MovieData(
+data class SeriesData(
     val adult: Boolean,
     val backdropPath: String?,
     val genreIds: List<Int>? = null,
     val id: Long,
+    val originCountry: List<String>? = null,
     val originalLanguage: String,
-    val originalTitle: String,
+    val originalName: String,
     val overview: String,
     val popularity: Double,
     val posterPath: String?,
     val posterUrl: String,
-    val releaseDate: String,
-    val title: String,
-    val video: Boolean,
+    val firstAirDate: String,
+    val name: String,
     val voteAverage: Double,
-    val voteCount: Int,
+    val voteCount: Int
 ) {
-    fun toMovie() = Movie(
+    fun toSeries() = Series(
         id = TitleId.of(id),
-        name = title,
+        name = name,
         posterUrl = Url.of(posterUrl),
         rating = Rating.of(voteAverage),
         voteCounts = voteCount,
-        createdAt = LocalDate.parse(releaseDate),
+        createdAt = LocalDate.parse(firstAirDate),
         shortDescription = overview,
         longDescription = overview,
         crews = emptyList(),
         actors = emptyList(),
-        runningTime = Duration.ZERO
     )
 }

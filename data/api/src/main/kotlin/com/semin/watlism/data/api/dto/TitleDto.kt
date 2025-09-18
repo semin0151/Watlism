@@ -1,8 +1,8 @@
 package com.semin.watlism.data.api.dto
 
 import com.semin.watlism.data.api.config.ApiConfig
-import com.semin.watlism.data.datasource.api.model.MediaType
-import com.semin.watlism.data.datasource.api.model.TitleData
+import com.semin.watlism.data.model.MediaType
+import com.semin.watlism.data.model.TitleData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

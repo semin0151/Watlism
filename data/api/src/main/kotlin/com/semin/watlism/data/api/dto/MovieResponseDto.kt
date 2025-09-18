@@ -1,6 +1,6 @@
 package com.semin.watlism.data.api.dto
 
-import com.semin.watlism.data.datasource.api.model.MovieResponseData
+import com.semin.watlism.data.model.MovieResponseData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

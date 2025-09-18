@@ -1,8 +1,10 @@
 package com.semin.watlism.data.di
 
+import com.semin.watlism.data.repository.GenresRepositoryImpl
 import com.semin.watlism.data.repository.MovieRepositoryImpl
 import com.semin.watlism.data.repository.SeriesRepositoryImpl
 import com.semin.watlism.data.repository.TitleRepositoryImpl
+import com.semin.watlism.domain.repository.GenresRepository
 import com.semin.watlism.domain.repository.MovieRepository
 import com.semin.watlism.domain.repository.SeriesRepository
 import com.semin.watlism.domain.repository.TitleRepository
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindsSeriesRepository(
         repositoryImpl: SeriesRepositoryImpl
     ): SeriesRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsGenresRepository(
+        repositoryImpl: GenresRepositoryImpl
+    ): GenresRepository
 }

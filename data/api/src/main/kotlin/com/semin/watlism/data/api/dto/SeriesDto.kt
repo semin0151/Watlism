@@ -1,7 +1,7 @@
 package com.semin.watlism.data.api.dto
 
 import com.semin.watlism.data.api.config.ApiConfig
-import com.semin.watlism.data.datasource.api.model.SeriesData
+import com.semin.watlism.data.model.SeriesData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

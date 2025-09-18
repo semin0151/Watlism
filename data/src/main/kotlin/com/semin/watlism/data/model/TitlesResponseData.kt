@@ -1,6 +1,5 @@
-package com.semin.watlism.data.datasource.api.model
+package com.semin.watlism.data.model
 
-import com.semin.watlism.domain.model.AiringStatus
 import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.Series
 import com.semin.watlism.domain.model.Title

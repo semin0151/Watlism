@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.material)
     implementation(libs.retrofit.kotlin.serialization)

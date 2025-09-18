@@ -1,6 +1,7 @@
 package com.semin.watlism.data.api.di
 
 import com.semin.watlism.data.api.TmdbDiscoverApi
+import com.semin.watlism.data.api.TmdbGenresApi
 import com.semin.watlism.data.api.TmdbTrendingApi
 import com.semin.watlism.data.api.config.ApiConfig
 import dagger.Module
@@ -64,6 +65,14 @@ object ApiModule {
         @TmdbRetrofit retrofit: Retrofit
     ): TmdbDiscoverApi {
         return retrofit.create<TmdbDiscoverApi>()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTmdbGenresApi(
+        @TmdbRetrofit retrofit: Retrofit
+    ): TmdbGenresApi {
+        return retrofit.create<TmdbGenresApi>()
     }
 }
 

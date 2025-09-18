@@ -100,6 +100,26 @@ fun HomeScreen(
                         )
                     }
                 }
+
+                item {
+                    if (uiState.popularDramas.isNotEmpty()) {
+                        TitleSection(
+                            sectionTitle = "인기 드라마",
+                            titles = uiState.popularDramas,
+                            onTitleClick = {}
+                        )
+                    }
+                }
+
+                item {
+                    if (uiState.popularJapaneseAnimation.isNotEmpty()) {
+                        TitleSection(
+                            sectionTitle = "인기 애니메이션",
+                            titles = uiState.popularJapaneseAnimation,
+                            onTitleClick = {}
+                        )
+                    }
+                }
             }
         }
     }

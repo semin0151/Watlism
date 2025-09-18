@@ -21,4 +21,28 @@ class SeriesRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override fun getSeries(
+        country: String?,
+        firstAirDateGte: String?,
+        voteCountGte: Double?,
+        withGenres: Long?,
+        withoutGenres: List<Long>?,
+    ) : Flow<List<Series>> {
+        return flow {
+            discoverApiDataSource.getSeries(
+                country,
+                firstAirDateGte,
+                voteCountGte,
+                withGenres,
+                withoutGenres
+            ).run {
+                if (isSuccess) {
+                    emit(this.getOrNull()?.results?.map { it.toSeries() } ?: emptyList())
+                } else {
+                    exceptionOrNull()?.let { throw it }
+                }
+            }
+        }
+    }
 }

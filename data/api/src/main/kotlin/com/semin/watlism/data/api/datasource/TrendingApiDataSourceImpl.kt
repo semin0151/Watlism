@@ -2,7 +2,7 @@ package com.semin.watlism.data.api.datasource
 
 import com.semin.watlism.data.api.TmdbTrendingApi
 import com.semin.watlism.data.datasource.api.TrendingApiDataSource
-import com.semin.watlism.data.datasource.api.model.TitlesResponseData
+import com.semin.watlism.data.model.TitlesResponseData
 import retrofit2.HttpException
 import javax.inject.Inject
 

@@ -14,13 +14,14 @@ jetbrainsKotlinJvm = "2.1.21"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 kotlin = "2.1.21"
-kotlinxCoroutines = "1.7.3"
+kotlinxCoroutines = "1.10.2"
 kotlinxSerialization = "1.7.3"
 kotlinDatetime = "0.7.1"
 ksp = "2.1.21-2.0.2"
 material = "1.12.0"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
+room = "2.8.0"
 secretsGradlePlugin = "2.0.1"
 
 [libraries]
@@ -54,6 +55,9 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

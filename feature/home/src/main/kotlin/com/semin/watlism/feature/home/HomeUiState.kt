@@ -14,6 +14,8 @@ data class HomeUiState(
     val trendingTitles: List<Title>,
     val popularMovies: List<Movie>,
     val popularSeries: List<Series>,
+    val popularDramas: List<Series>,
+    val popularJapaneseAnimation: List<Series>,
     val isLoading: Boolean,
     val isError: Boolean,
 )

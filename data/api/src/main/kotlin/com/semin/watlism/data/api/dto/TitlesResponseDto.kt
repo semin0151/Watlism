@@ -1,6 +1,6 @@
 package com.semin.watlism.data.api.dto
 
-import com.semin.watlism.data.datasource.api.model.TitlesResponseData
+import com.semin.watlism.data.model.TitlesResponseData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
