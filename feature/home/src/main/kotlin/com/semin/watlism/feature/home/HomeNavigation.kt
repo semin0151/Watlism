@@ -11,7 +11,7 @@ object HomeRoute
 fun NavController.navigateToHome() = navigate(HomeRoute)
 
 fun NavGraphBuilder.homeScreen(
-    onTitleClick: (Long) -> Unit
+    onTitleClick: (Long, String) -> Unit
 ) {
     composable<HomeRoute> {
         HomeScreen(onTitleClick = onTitleClick)

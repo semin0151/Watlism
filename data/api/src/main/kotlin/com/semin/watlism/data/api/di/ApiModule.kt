@@ -2,7 +2,9 @@ package com.semin.watlism.data.api.di
 
 import com.semin.watlism.data.api.TmdbDiscoverApi
 import com.semin.watlism.data.api.TmdbGenresApi
+import com.semin.watlism.data.api.TmdbMovieApi
 import com.semin.watlism.data.api.TmdbTrendingApi
+import com.semin.watlism.data.api.TmdbTvApi
 import com.semin.watlism.data.api.config.ApiConfig
 import dagger.Module
 import dagger.Provides
@@ -73,6 +75,22 @@ object ApiModule {
         @TmdbRetrofit retrofit: Retrofit
     ): TmdbGenresApi {
         return retrofit.create<TmdbGenresApi>()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTmdbMovieApi(
+        @TmdbRetrofit retrofit: Retrofit
+    ): TmdbMovieApi {
+        return retrofit.create<TmdbMovieApi>()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTmdbTvApi(
+        @TmdbRetrofit retrofit: Retrofit
+    ): TmdbTvApi {
+        return retrofit.create<TmdbTvApi>()
     }
 }
 

@@ -51,7 +51,7 @@ import kotlin.math.absoluteValue
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onTitleClick: (Long) -> Unit,
+    onTitleClick: (Long, String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState: HomeUiState by viewModel.uiState.collectAsState()
@@ -130,7 +130,7 @@ fun HomeScreen(
 private fun TrendingTitlesContent(
     modifier: Modifier = Modifier,
     trendingTitles: List<Title>,
-    onTitleClick: (Long) -> Unit,
+    onTitleClick: (Long, String) -> Unit,
 ) {
     val pagerState = getInfinityPagerState(trendingTitles)
 
@@ -205,7 +205,7 @@ private fun HomeHeader(
 private fun LargeTitleCard(
     modifier: Modifier = Modifier,
     title: Title,
-    onTitleClick: (Long) -> Unit,
+    onTitleClick: (Long, String) -> Unit,
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val imageWidth = screenWidth.minus(32.dp)
@@ -213,7 +213,7 @@ private fun LargeTitleCard(
 
     Card(
         onClick = {
-            onTitleClick.invoke(title.id.value)
+            onTitleClick.invoke(title.id.value, title.type.name)
         },
         modifier = modifier
             .width(imageWidth)
@@ -307,7 +307,7 @@ private fun LargeTitleCard(
 fun TitleSection(
     sectionTitle: String,
     titles: List<Title>,
-    onTitleClick: (Long) -> Unit,
+    onTitleClick: (Long, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -324,10 +324,10 @@ fun TitleSection(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(titles) { movie ->
+            items(titles) { title ->
                 TitleItemCard(
-                    title = movie,
-                    onClick = { onTitleClick(movie.id.value) }
+                    title = title,
+                    onClick = { onTitleClick(title.id.value, title.type.name) }
                 )
             }
         }

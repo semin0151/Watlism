@@ -2,6 +2,7 @@ package com.semin.watlism.domain.model
 
 import com.semin.watlism.domain.value.Rating
 import com.semin.watlism.domain.value.TitleId
+import com.semin.watlism.domain.value.TitleType
 import com.semin.watlism.domain.value.Url
 import kotlinx.datetime.LocalDate
 import kotlin.time.Duration
@@ -17,6 +18,7 @@ sealed interface Title {
     val longDescription: String
     val crews: List<Credit>
     val actors: List<Credit>
+    val type: TitleType
 }
 
 data class Movie(
@@ -30,8 +32,11 @@ data class Movie(
     override val longDescription: String,
     override val crews: List<Credit>,
     override val actors: List<Credit>,
+
     val runningTime: Duration,
-) : Title
+) : Title {
+    override val type: TitleType get() = TitleType.movie
+}
 
 data class Series(
     override val id: TitleId,
@@ -47,7 +52,9 @@ data class Series(
 //    val seasonCount: Int,
 //    val episodeCount: Int,
 //    val airingStatus: AiringStatus
-) : Title
+) : Title {
+    override val type: TitleType get() = TitleType.tv
+}
 
 enum class AiringStatus {
     OnAir, Ended

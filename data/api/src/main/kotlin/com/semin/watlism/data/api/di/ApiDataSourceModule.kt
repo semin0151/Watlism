@@ -2,9 +2,13 @@ package com.semin.watlism.data.api.di
 
 import com.semin.watlism.data.api.datasource.DiscoverApiDataSourceImpl
 import com.semin.watlism.data.api.datasource.GenresApiDataSourceImpl
+import com.semin.watlism.data.api.datasource.MovieApiDataSourceImpl
+import com.semin.watlism.data.api.datasource.SeriesApiDataSourceImpl
 import com.semin.watlism.data.api.datasource.TrendingApiDataSourceImpl
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
 import com.semin.watlism.data.datasource.api.GenresApiDataSource
+import com.semin.watlism.data.datasource.api.MovieApiDataSource
+import com.semin.watlism.data.datasource.api.SeriesApiDataSource
 import com.semin.watlism.data.datasource.api.TrendingApiDataSource
 import dagger.Binds
 import dagger.Module
@@ -32,4 +36,16 @@ abstract class ApiDataSourceModule {
     abstract fun bindsGenresApiDataSource(
         dataSourceImpl: GenresApiDataSourceImpl
     ): GenresApiDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsMovieApiDataSource(
+        dataSourceImpl: MovieApiDataSourceImpl
+    ): MovieApiDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsSeriesApiDataSource(
+        dataSourceImpl: SeriesApiDataSourceImpl
+    ): SeriesApiDataSource
 }

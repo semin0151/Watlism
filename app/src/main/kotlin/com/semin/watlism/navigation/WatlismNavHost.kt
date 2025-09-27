@@ -21,8 +21,8 @@ fun WatlismNavHost(
         modifier = modifier,
     ) {
         homeScreen(
-            onTitleClick = { titleId ->
-                navigationController.navigateToTitleDetail(titleId)
+            onTitleClick = { titleId, titleType ->
+                navigationController.navigateToTitleDetail(titleId, titleType)
             }
         )
 
