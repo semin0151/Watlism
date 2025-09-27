@@ -9,7 +9,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbTrendingApi {
-
     @GET("trending/all/{time_window}")
     suspend fun getAll(
         @Header("Authorization") bearerToken: String = ApiConfig.BEARER_TOKEN,

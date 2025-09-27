@@ -87,7 +87,7 @@ fun HomeScreen(
                         TitleSection(
                             sectionTitle = "인기 영화",
                             titles = uiState.popularMovies,
-                            onTitleClick = {}
+                            onTitleClick = onTitleClick
                         )
                     }
                 }
@@ -97,7 +97,7 @@ fun HomeScreen(
                         TitleSection(
                             sectionTitle = "인기 시리즈",
                             titles = uiState.popularSeries,
-                            onTitleClick = {}
+                            onTitleClick = onTitleClick
                         )
                     }
                 }
@@ -107,7 +107,7 @@ fun HomeScreen(
                         TitleSection(
                             sectionTitle = "인기 드라마",
                             titles = uiState.popularDramas,
-                            onTitleClick = {}
+                            onTitleClick = onTitleClick
                         )
                     }
                 }
@@ -117,7 +117,7 @@ fun HomeScreen(
                         TitleSection(
                             sectionTitle = "인기 애니메이션",
                             titles = uiState.popularJapaneseAnimation,
-                            onTitleClick = {}
+                            onTitleClick = onTitleClick
                         )
                     }
                 }

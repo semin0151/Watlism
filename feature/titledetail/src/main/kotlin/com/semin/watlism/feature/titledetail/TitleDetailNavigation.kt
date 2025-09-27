@@ -2,8 +2,9 @@ package com.semin.watlism.feature.titledetail
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.semin.watlism.domain.value.TitleId
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,7 +17,11 @@ fun NavController.navigateToTitleDetail(
 ) = navigate(TitleDetailRoute(titleId = titleId))
 
 fun NavGraphBuilder.titleDetailScreen() {
-    composable<TitleDetailRoute> {
-        TitleDetailScreen()
+    composable<TitleDetailRoute> { backStackEntry ->
+        val route = backStackEntry.toRoute<TitleDetailRoute>()
+        val titleId = route.titleId
+        TitleDetailScreen(
+            titleId = TitleId.of(titleId)
+        )
     }
 }

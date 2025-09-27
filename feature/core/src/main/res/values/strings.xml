@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="movie">영화</string>
-    <string name="series">시리드</string>
+    <string name="series">시리즈</string>
 
     <string name="star_rate">⭐ %.1f</string>
 </resources>

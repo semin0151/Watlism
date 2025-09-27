@@ -8,7 +8,6 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface TmdbGenresApi {
-
     @GET("genre/movie/list")
     suspend fun getMovieGenres(
         @Header("Authorization") bearerToken: String = ApiConfig.BEARER_TOKEN,
