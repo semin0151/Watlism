@@ -17,6 +17,7 @@ import com.semin.watlism.domain.value.Url
 data class MovieDetailData(
     val adult: Boolean,
     val backdropPath: String?,
+    val backdropUrl: String,
     val belongsToCollection: CollectionInfoData?,
     val budget: Int,
     val genres: List<GenreData>,
@@ -29,6 +30,7 @@ data class MovieDetailData(
     val overview: String,
     val popularity: Double,
     val posterPath: String?,
+    val posterUrl: String,
     val productionCompanies: List<ProductionCompanyData>,
     val productionCountries: List<ProductionCountryData>,
     val releaseDate: String,
@@ -45,6 +47,7 @@ data class MovieDetailData(
     fun toMovieDetail() = MovieDetail(
         adult = adult,
         backdropPath = backdropPath,
+        backdropUrl = backdropUrl,
         genres = genres.map { it.toGenre() },
         homepage = homepage,
         id = TitleId.of(id),
@@ -54,6 +57,7 @@ data class MovieDetailData(
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
+        posterUrl = posterUrl,
         productionCompanies = productionCompanies.map { it.toProductionCompany() },
         productionCountries = productionCountries.map { it.toProductionCountry() },
         spokenLanguages = spokenLanguages.map { it.toSpokenLanguage() },
@@ -67,7 +71,7 @@ data class MovieDetailData(
         releaseDate = releaseDate,
         revenue = revenue,
         runtime = runtime,
-        title = title,
+        name = title,
         video = video
     )
 }
@@ -75,6 +79,7 @@ data class MovieDetailData(
 data class SeriesDetailData(
     val adult: Boolean,
     val backdropPath: String?,
+    val backdropUrl: String,
     val createdBy: List<CreatorData>,
     val episodeRunTime: List<Int>,
     val firstAirDate: String?,
@@ -96,6 +101,7 @@ data class SeriesDetailData(
     val overview: String,
     val popularity: Double,
     val posterPath: String?,
+    val posterUrl: String,
     val productionCompanies: List<ProductionCompanyData>,
     val productionCountries: List<ProductionCountryData>,
     val seasons: List<SeasonData>,
@@ -109,9 +115,10 @@ data class SeriesDetailData(
     fun toSeriesDetail() = SeriesDetail(
         adult = adult,
         backdropPath = backdropPath,
+        backdropUrl = backdropUrl,
         createdBy = createdBy.map { it.toPerson() },
         episodeRunTime = episodeRunTime,
-        firstAirDate = firstAirDate,
+        releaseDate = firstAirDate ?: "",
         genres = genres.map { it.toGenre() },
         homepage = homepage,
         id = TitleId.of(id),
@@ -130,6 +137,7 @@ data class SeriesDetailData(
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
+        posterUrl = posterUrl,
         productionCompanies = productionCompanies.map { it.toProductionCompany() },
         productionCountries = productionCountries.map { it.toProductionCountry() },
         seasons = seasons.map { it.toSeason() },

@@ -7,25 +7,36 @@ import com.semin.watlism.domain.value.TitleId
 import com.semin.watlism.domain.value.TitleType
 import com.semin.watlism.feature.core.Logs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
 class TitleDetailViewModel @Inject constructor(
     private val getDetailUseCase: GetDetailUseCase,
-): ViewModel() {
+) : ViewModel() {
+    private val _uiState = MutableStateFlow(
+        TitleDetailUiState(
+            titleDetail = null,
+            isLoading = true,
+            isError = false
+        )
+    )
+    val uiState: StateFlow<TitleDetailUiState> = _uiState.asStateFlow()
+
     fun test(
         titleId: TitleId,
         titleType: TitleType
     ) {
         getDetailUseCase(titleId, titleType)
-            .onStart { Logs.e("onStart") }
-            .onEach { Logs.e("onEach:${it}") }
-            .onCompletion { Logs.e("onCompletion") }
+            .onEach { titleDetail -> _uiState.update { it.copy(titleDetail = titleDetail) } }
             .catch { Logs.e("catch:${it}") }
             .launchIn(viewModelScope)
     }

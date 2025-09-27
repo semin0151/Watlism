@@ -1,5 +1,6 @@
 package com.semin.watlism.data.api.dto
 
+import com.semin.watlism.data.api.config.ApiConfig
 import com.semin.watlism.data.model.CollectionInfoData
 import com.semin.watlism.data.model.CreatorData
 import com.semin.watlism.data.model.EpisodeData
@@ -55,9 +56,13 @@ data class MovieDetailDto(
     @SerialName("vote_count")
     val voteCount: Int
 ) {
+    val backdropUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${backdropPath}"
+    val posterUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${posterPath}"
+
     fun toMovieDetailData() = MovieDetailData(
         adult = adult,
         backdropPath = backdropPath,
+        backdropUrl = backdropUrl,
         belongsToCollection = belongsToCollection?.toCollectionInfoData(),
         budget = budget,
         genres = genres.map { it.toGenreData() },
@@ -70,6 +75,7 @@ data class MovieDetailDto(
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
+        posterUrl = posterUrl,
         productionCompanies = productionCompanies.map { it.toProductionCompanyData() },
         productionCountries = productionCountries.map { it.toProductionCountryData() },
         releaseDate = releaseDate,
@@ -139,9 +145,13 @@ data class SeriesDetailDto(
     @SerialName("vote_count")
     val voteCount: Int
 ) {
+    val backdropUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${backdropPath}"
+    val posterUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${posterPath}"
+
     fun toSeriesDetailData() = SeriesDetailData(
         adult = adult,
         backdropPath = backdropPath,
+        backdropUrl = backdropUrl,
         createdBy = createdBy.map { it.toCreatorData() },
         episodeRunTime = episodeRunTime,
         firstAirDate = firstAirDate,
@@ -163,6 +173,7 @@ data class SeriesDetailDto(
         overview = overview,
         popularity = popularity,
         posterPath = posterPath,
+        posterUrl = posterUrl,
         productionCompanies = productionCompanies.map { it.toProductionCompanyData() },
         productionCountries = productionCountries.map { it.toProductionCountryData() },
         seasons = seasons.map { it.toSeasonData() },
