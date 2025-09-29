@@ -19,7 +19,6 @@ sealed interface TitleDetail {
     val posterUrl: String
     val productionCompanies: List<ProductionCompany>
     val productionCountries: List<ProductionCountry>
-    val releaseDate: String
     val spokenLanguages: List<SpokenLanguage>
     val status: String
     val tagline: String?
@@ -44,7 +43,6 @@ data class MovieDetail(
     override val posterUrl: String,
     override val productionCompanies: List<ProductionCompany>,
     override val productionCountries: List<ProductionCountry>,
-    override val releaseDate: String,
     override val spokenLanguages: List<SpokenLanguage>,
     override val status: String,
     override val tagline: String?,
@@ -53,6 +51,7 @@ data class MovieDetail(
     val belongsToCollection: CollectionInfo?,
     val budget: Int,
     val imdbId: String?,
+    val releaseDate: String,
     val revenue: Long,
     val runtime: Int?,
     val video: Boolean
@@ -75,7 +74,6 @@ data class SeriesDetail(
     override val posterUrl: String,
     override val productionCompanies: List<ProductionCompany>,
     override val productionCountries: List<ProductionCountry>,
-    override val releaseDate: String,
     override val spokenLanguages: List<SpokenLanguage>,
     override val status: String,
     override val tagline: String?,
@@ -83,6 +81,7 @@ data class SeriesDetail(
     override val voteCount: Int,
     val createdBy: List<Person>,
     val episodeRunTime: List<Int>,
+    val firstAirDate : String,
     val inProduction: Boolean,
     val languages: List<String>,
     val lastAirDate: String?,

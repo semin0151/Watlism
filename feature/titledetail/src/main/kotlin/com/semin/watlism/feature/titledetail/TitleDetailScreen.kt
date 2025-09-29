@@ -45,6 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.semin.watlism.domain.model.Genre
+import com.semin.watlism.domain.model.MovieDetail
 import com.semin.watlism.domain.model.SeriesDetail
 import com.semin.watlism.domain.model.TitleDetail
 import com.semin.watlism.domain.value.TitleId
@@ -157,7 +158,10 @@ private fun TitleDetailContent(
                     }
 
                     Text(
-                        text = titleDetail.releaseDate,
+                        text = when (titleDetail) {
+                            is MovieDetail -> titleDetail.releaseDate
+                            is SeriesDetail -> titleDetail.firstAirDate
+                        },
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.8f)
                     )
@@ -179,7 +183,13 @@ private fun TitleDetailContent(
                                     "%.1f",
                                     titleDetail.voteAverage
                                 )
-                            } (${String.format(Locale.getDefault(), "%,d", titleDetail.voteCount)})",
+                            } (${
+                                String.format(
+                                    Locale.getDefault(),
+                                    "%,d",
+                                    titleDetail.voteCount
+                                )
+                            })",
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.White
                         )
@@ -187,63 +197,68 @@ private fun TitleDetailContent(
                 }
             }
         }
+    }
 
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            if (titleDetail.overview.isNotEmpty()) {
-                DetailSection(
-                    title = "개요",
-                    content = {
-                        var isExpanded by remember { mutableStateOf(false) }
-
-                        Text(
-                            text = titleDetail.overview,
-                            style = MaterialTheme.typography.bodyLarge,
-                            lineHeight = MaterialTheme.typography.bodyLarge.lineHeight,
-                            maxLines = if (isExpanded) Int.MAX_VALUE else 3,
-                            overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis,
-                            onTextLayout = { textLayoutResult -> }
-                        )
-
-                        TextButton(
-                            onClick = { isExpanded = !isExpanded }
-                        ) {
-                            Text(if (isExpanded) "접기" else "더보기")
-                        }
-                    }
-                )
-            }
-
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
+    ) {
+        if (titleDetail.overview.isNotEmpty()) {
             DetailSection(
-                title = "상세 정보",
+                title = "개요",
                 content = {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        DetailInfoRow("원제", titleDetail.originalName)
-                        DetailInfoRow("언어", titleDetail.originalLanguage.uppercase())
+                    var isExpanded by remember { mutableStateOf(false) }
 
-                        if (titleDetail is SeriesDetail) {
-                            DetailInfoRow("시즌", "${titleDetail.numberOfSeasons}시즌")
-                            DetailInfoRow("에피소드", "총 ${titleDetail.numberOfEpisodes}화")
-                        }
-                        DetailInfoRow("첫 방영일", titleDetail.releaseDate)
-                        DetailInfoRow(
-                            "평점",
-                            "${
-                                String.format(
-                                    Locale.ROOT,
-                                    "%.1f",
-                                    titleDetail.voteAverage
-                                )
-                            } (${String.format(Locale.getDefault(), "%,d", titleDetail.voteCount)})"
-                        )
+                    Text(
+                        text = titleDetail.overview,
+                        style = MaterialTheme.typography.bodyLarge,
+                        lineHeight = MaterialTheme.typography.bodyLarge.lineHeight,
+                        maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                        overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis,
+                        onTextLayout = { textLayoutResult -> }
+                    )
+
+                    TextButton(
+                        onClick = { isExpanded = !isExpanded }
+                    ) {
+                        Text(if (isExpanded) "접기" else "더보기")
                     }
                 }
             )
         }
+
+        DetailSection(
+            title = "상세 정보",
+            content = {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    DetailInfoRow("원제", titleDetail.originalName)
+                    DetailInfoRow("언어", titleDetail.originalLanguage.uppercase())
+
+                    if (titleDetail is SeriesDetail) {
+                        DetailInfoRow("시즌", "${titleDetail.numberOfSeasons}시즌")
+                        DetailInfoRow("에피소드", "총 ${titleDetail.numberOfEpisodes}화")
+                    }
+
+                    when (titleDetail) {
+                        is SeriesDetail -> DetailInfoRow("첫 방영일", titleDetail.firstAirDate)
+                        is MovieDetail -> DetailInfoRow("개봉일", titleDetail.releaseDate)
+                    }
+
+                    DetailInfoRow(
+                        "평점",
+                        "${
+                            String.format(
+                                Locale.ROOT,
+                                "%.1f",
+                                titleDetail.voteAverage
+                            )
+                        } (${String.format(Locale.getDefault(), "%,d", titleDetail.voteCount)})"
+                    )
+                }
+            }
+        )
     }
 }
 

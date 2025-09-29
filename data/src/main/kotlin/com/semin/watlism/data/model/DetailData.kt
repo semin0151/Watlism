@@ -118,7 +118,7 @@ data class SeriesDetailData(
         backdropUrl = backdropUrl,
         createdBy = createdBy.map { it.toPerson() },
         episodeRunTime = episodeRunTime,
-        releaseDate = firstAirDate ?: "",
+        firstAirDate = firstAirDate ?: "",
         genres = genres.map { it.toGenre() },
         homepage = homepage,
         id = TitleId.of(id),
