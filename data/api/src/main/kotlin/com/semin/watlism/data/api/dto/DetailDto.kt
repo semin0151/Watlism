@@ -253,10 +253,12 @@ data class CreatorDto(
     val name: String,
     @SerialName("profile_path") val profilePath: String? = null
 ) {
+    val profileUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${profilePath}"
+
     fun toCreatorData() = CreatorData(
         id = id,
         name = name,
-        profilePath = profilePath
+        profileUrl = profileUrl
     )
 }
 

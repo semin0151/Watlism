@@ -203,12 +203,12 @@ data class CollectionInfoData(
 data class CreatorData(
     val id: Long,
     val name: String,
-    val profilePath: String? = null
+    val profileUrl: String
 ) {
     fun toPerson() = Person(
         id = PersonId.of(id),
         name = name,
-        profileUrl = Url.of(profilePath ?: "")
+        profileUrl = Url.of(profileUrl)
     )
 }
 
