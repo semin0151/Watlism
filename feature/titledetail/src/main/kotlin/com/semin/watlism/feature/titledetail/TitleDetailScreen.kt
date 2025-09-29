@@ -197,68 +197,68 @@ private fun TitleDetailContent(
                 }
             }
         }
-    }
 
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
-    ) {
-        if (titleDetail.overview.isNotEmpty()) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            if (titleDetail.overview.isNotEmpty()) {
+                DetailSection(
+                    title = "개요",
+                    content = {
+                        var isExpanded by remember { mutableStateOf(false) }
+
+                        Text(
+                            text = titleDetail.overview,
+                            style = MaterialTheme.typography.bodyLarge,
+                            lineHeight = MaterialTheme.typography.bodyLarge.lineHeight,
+                            maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                            overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis,
+                            onTextLayout = { textLayoutResult -> }
+                        )
+
+                        TextButton(
+                            onClick = { isExpanded = !isExpanded }
+                        ) {
+                            Text(if (isExpanded) "접기" else "더보기")
+                        }
+                    }
+                )
+            }
+
             DetailSection(
-                title = "개요",
+                title = "상세 정보",
                 content = {
-                    var isExpanded by remember { mutableStateOf(false) }
-
-                    Text(
-                        text = titleDetail.overview,
-                        style = MaterialTheme.typography.bodyLarge,
-                        lineHeight = MaterialTheme.typography.bodyLarge.lineHeight,
-                        maxLines = if (isExpanded) Int.MAX_VALUE else 3,
-                        overflow = if (isExpanded) TextOverflow.Visible else TextOverflow.Ellipsis,
-                        onTextLayout = { textLayoutResult -> }
-                    )
-
-                    TextButton(
-                        onClick = { isExpanded = !isExpanded }
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Text(if (isExpanded) "접기" else "더보기")
+                        DetailInfoRow("원제", titleDetail.originalName)
+                        DetailInfoRow("언어", titleDetail.originalLanguage.uppercase())
+
+                        if (titleDetail is SeriesDetail) {
+                            DetailInfoRow("시즌", "${titleDetail.numberOfSeasons}시즌")
+                            DetailInfoRow("에피소드", "총 ${titleDetail.numberOfEpisodes}화")
+                        }
+
+                        when (titleDetail) {
+                            is SeriesDetail -> DetailInfoRow("첫 방영일", titleDetail.firstAirDate)
+                            is MovieDetail -> DetailInfoRow("개봉일", titleDetail.releaseDate)
+                        }
+
+                        DetailInfoRow(
+                            "평점",
+                            "${
+                                String.format(
+                                    Locale.ROOT,
+                                    "%.1f",
+                                    titleDetail.voteAverage
+                                )
+                            } (${String.format(Locale.getDefault(), "%,d", titleDetail.voteCount)})"
+                        )
                     }
                 }
             )
         }
-
-        DetailSection(
-            title = "상세 정보",
-            content = {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    DetailInfoRow("원제", titleDetail.originalName)
-                    DetailInfoRow("언어", titleDetail.originalLanguage.uppercase())
-
-                    if (titleDetail is SeriesDetail) {
-                        DetailInfoRow("시즌", "${titleDetail.numberOfSeasons}시즌")
-                        DetailInfoRow("에피소드", "총 ${titleDetail.numberOfEpisodes}화")
-                    }
-
-                    when (titleDetail) {
-                        is SeriesDetail -> DetailInfoRow("첫 방영일", titleDetail.firstAirDate)
-                        is MovieDetail -> DetailInfoRow("개봉일", titleDetail.releaseDate)
-                    }
-
-                    DetailInfoRow(
-                        "평점",
-                        "${
-                            String.format(
-                                Locale.ROOT,
-                                "%.1f",
-                                titleDetail.voteAverage
-                            )
-                        } (${String.format(Locale.getDefault(), "%,d", titleDetail.voteCount)})"
-                    )
-                }
-            }
-        )
     }
 }
 
