@@ -2,8 +2,8 @@ package com.semin.watlism.domain.model
 
 sealed interface Role
 
-data class Crew(
-    val job: CrewJob
+data class Director(
+    val name: String = "Director"
 ): Role
 
 data class Actor(
@@ -11,5 +11,5 @@ data class Actor(
 ): Role
 
 enum class CrewJob {
-    Director
+    Directing, Acting
 }

@@ -3,9 +3,12 @@ package com.semin.watlism.domain.model
 import com.semin.watlism.domain.value.TitleId
 
 sealed interface TitleDetail {
+    val actors: List<Credit>
     val adult: Boolean
     val backdropPath: String?
     val backdropUrl: String
+    val credits: List<Credit>
+    val directors: List<Credit>
     val genres: List<Genre>
     val homepage: String
     val id: TitleId
@@ -30,6 +33,7 @@ data class MovieDetail(
     override val adult: Boolean,
     override val backdropPath: String?,
     override val backdropUrl: String,
+    override val credits: List<Credit>,
     override val genres: List<Genre>,
     override val homepage: String,
     override val id: TitleId,
@@ -55,12 +59,19 @@ data class MovieDetail(
     val revenue: Long,
     val runtime: Int?,
     val video: Boolean
-): TitleDetail
+): TitleDetail {
+    override val actors: List<Credit>
+        get() = credits.filter { it.role is Actor }.take(10)
+
+    override val directors: List<Credit>
+        get() = credits.filter { it.role is Director }.take(10)
+}
 
 data class SeriesDetail(
     override val adult: Boolean,
     override val backdropPath: String?,
     override val backdropUrl: String,
+    override val credits: List<Credit>,
     override val genres: List<Genre>,
     override val homepage: String,
     override val id: TitleId,
@@ -92,7 +103,13 @@ data class SeriesDetail(
     val numberOfSeasons: Int,
     val seasons: List<Season>,
     val type: String,
-): TitleDetail
+): TitleDetail {
+    override val actors: List<Credit>
+        get() = credits.filter { it.role is Actor }.take(10)
+
+    override val directors: List<Credit>
+        get() = credits.filter { it.role is Director }.take(10)
+}
 
 data class ProductionCompany(
     val id: Int,

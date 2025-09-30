@@ -2,6 +2,7 @@ package com.semin.watlism.data.repository
 
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
 import com.semin.watlism.data.datasource.api.MovieApiDataSource
+import com.semin.watlism.domain.model.Credit
 import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.MovieDetail
 import com.semin.watlism.domain.repository.MovieRepository
@@ -37,6 +38,20 @@ class MovieRepositoryImpl @Inject constructor(
             ).run {
                 if (isSuccess) {
                     emit(this.getOrNull()?.toMovieDetail() ?: throw IllegalStateException("MovieDetail is null"))
+                } else {
+                    exceptionOrNull()?.let { throw it }
+                }
+            }
+        }
+    }
+
+    override fun getCredits(titleId: TitleId): Flow<List<Credit>> {
+        return flow {
+            movieApiDataSource.getCredits(
+                movieId = titleId.value
+            ).run {
+                if (isSuccess) {
+                    emit(this.getOrNull()?.map { it.toCredit(titleId) }?.filter { it.role != null } ?: emptyList())
                 } else {
                     exceptionOrNull()?.let { throw it }
                 }

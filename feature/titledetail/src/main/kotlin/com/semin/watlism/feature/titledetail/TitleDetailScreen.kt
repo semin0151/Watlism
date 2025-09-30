@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,9 +15,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -39,11 +42,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.semin.watlism.domain.model.Actor
+import com.semin.watlism.domain.model.Credit
+import com.semin.watlism.domain.model.Director
 import com.semin.watlism.domain.model.Genre
 import com.semin.watlism.domain.model.MovieDetail
 import com.semin.watlism.domain.model.SeriesDetail
@@ -258,6 +265,20 @@ private fun TitleDetailContent(
                     }
                 }
             )
+
+            if (titleDetail.directors.isNotEmpty()) {
+                CreditSection(
+                    credits = titleDetail.directors,
+                    title = "감독"
+                )
+            }
+
+            if (titleDetail.actors.isNotEmpty()) {
+                CreditSection(
+                    credits = titleDetail.actors,
+                    title = "출연진"
+                )
+            }
         }
     }
 }
@@ -327,5 +348,96 @@ private fun DetailInfoRow(
             fontWeight = FontWeight.Medium,
             modifier = Modifier.weight(2f)
         )
+    }
+}
+
+@Composable
+fun CreditSection(
+    modifier: Modifier = Modifier,
+    credits: List<Credit>,
+    title: String
+) {
+    if (credits.isNotEmpty()) {
+        DetailSection(
+            title = title,
+            modifier = modifier,
+            content = {
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(horizontal = 4.dp)
+                ) {
+                    items(credits) { credit ->
+                        CreditItem(credit = credit)
+                    }
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun CreditItem(
+    credit: Credit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.width(80.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        if (credit.person.profileUrl != null) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(credit.person.profileUrl?.value)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = credit.person.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Person,
+                    contentDescription = credit.person.name,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+        }
+
+        Text(
+            text = credit.person.name,
+            style = MaterialTheme.typography.bodySmall,
+            fontWeight = FontWeight.Medium,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+
+        val subName = when (val role = credit.role) {
+            is Director -> role.name
+            is Actor -> role.characterName
+            else -> null
+        }
+
+        if (subName != null) {
+            Text(
+                text = subName,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.semin.watlism.data.repository
 
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
 import com.semin.watlism.data.datasource.api.SeriesApiDataSource
+import com.semin.watlism.domain.model.Credit
 import com.semin.watlism.domain.model.Series
 import com.semin.watlism.domain.model.SeriesDetail
 import com.semin.watlism.domain.repository.SeriesRepository
@@ -57,6 +58,20 @@ class SeriesRepositoryImpl @Inject constructor(
             ).run {
                 if (isSuccess) {
                     emit(this.getOrNull()?.toSeriesDetail() ?: throw IllegalStateException("SeriesDetail is null"))
+                } else {
+                    exceptionOrNull()?.let { throw it }
+                }
+            }
+        }
+    }
+
+    override fun getCredits(titleId: TitleId): Flow<List<Credit>> {
+        return flow {
+            seriesApiDataSource.getCredits(
+                seriesId = titleId.value
+            ).run {
+                if (isSuccess) {
+                    emit(this.getOrNull()?.map { it.toCredit(titleId) }?.filter { it.role != null } ?: emptyList())
                 } else {
                     exceptionOrNull()?.let { throw it }
                 }

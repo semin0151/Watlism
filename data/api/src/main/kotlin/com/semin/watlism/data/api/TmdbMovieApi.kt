@@ -1,6 +1,7 @@
 package com.semin.watlism.data.api
 
 import com.semin.watlism.data.api.config.ApiConfig
+import com.semin.watlism.data.api.dto.MovieCreditsDto
 import com.semin.watlism.data.api.dto.MovieDetailDto
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,4 +16,11 @@ interface TmdbMovieApi {
         @Path("movie_id") movieId: Long,
         @Query("language") language: String = "ko-KR",
     ): Response<MovieDetailDto>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCredits(
+        @Header("Authorization") bearerToken: String = ApiConfig.BEARER_TOKEN,
+        @Path("movie_id") movieId: Long,
+        @Query("language") language: String = "ko-KR",
+    ): Response<MovieCreditsDto>
 }

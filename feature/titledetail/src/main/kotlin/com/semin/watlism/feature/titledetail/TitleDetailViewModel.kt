@@ -35,7 +35,10 @@ class TitleDetailViewModel @Inject constructor(
     ) {
         Logs.e("syncData: $titleId, $titleType")
         getDetailUseCase(titleId, titleType)
-            .onEach { titleDetail -> _uiState.update { it.copy(titleDetail = titleDetail) } }
+            .onEach { titleDetail ->
+                Logs.e("titleDetail:$titleDetail")
+                _uiState.update { it.copy(titleDetail = titleDetail) }
+            }
             .catch { Logs.e("catch:${it}") }
             .launchIn(viewModelScope)
     }
