@@ -1,6 +1,6 @@
 package com.semin.watlism.domain.repository
 
-import com.semin.watlism.domain.model.Credit
+import com.semin.watlism.domain.model.Credits
 import com.semin.watlism.domain.model.Series
 import com.semin.watlism.domain.model.SeriesDetail
 import com.semin.watlism.domain.value.TitleId
@@ -19,5 +19,5 @@ interface SeriesRepository {
 
     fun getDetail(titleId: TitleId): Flow<SeriesDetail>
 
-    fun getCredits(titleId: TitleId): Flow<List<Credit>>
+    fun getCredits(titleId: TitleId): Flow<Credits>
 }

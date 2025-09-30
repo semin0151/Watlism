@@ -2,7 +2,7 @@ package com.semin.watlism.data.repository
 
 import com.semin.watlism.data.datasource.api.DiscoverApiDataSource
 import com.semin.watlism.data.datasource.api.MovieApiDataSource
-import com.semin.watlism.domain.model.Credit
+import com.semin.watlism.domain.model.Credits
 import com.semin.watlism.domain.model.Movie
 import com.semin.watlism.domain.model.MovieDetail
 import com.semin.watlism.domain.repository.MovieRepository
@@ -45,13 +45,13 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCredits(titleId: TitleId): Flow<List<Credit>> {
+    override fun getCredits(titleId: TitleId): Flow<Credits> {
         return flow {
             movieApiDataSource.getCredits(
                 movieId = titleId.value
             ).run {
                 if (isSuccess) {
-                    emit(this.getOrNull()?.map { it.toCredit(titleId) }?.filter { it.role != null } ?: emptyList())
+                    emit(this.getOrNull()?.toCredits(titleId) ?: throw IllegalStateException("Credits is null"))
                 } else {
                     exceptionOrNull()?.let { throw it }
                 }

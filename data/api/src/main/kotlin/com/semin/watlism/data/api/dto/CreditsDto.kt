@@ -2,19 +2,33 @@ package com.semin.watlism.data.api.dto
 
 import com.semin.watlism.data.api.config.ApiConfig
 import com.semin.watlism.data.model.CreditsData
+import com.semin.watlism.data.model.MovieCreditsData
+import com.semin.watlism.data.model.SeriesCreditsData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class MovieCreditsDto(
     val id: Long,
-    val cast: List<CreditDto>
-)
+    val cast: List<CreditDto>,
+    val crew: List<CreditDto>
+) {
+    fun toMovieCreditsData() = MovieCreditsData(
+        cast = cast.map { it.toCreditData() },
+        crew = crew.map { it.toCreditData() },
+    )
+}
 
 @Serializable
 data class SeriesCreditsDto(
-    val cast: List<CreditDto>
-)
+    val cast: List<CreditDto>,
+    val crew: List<CreditDto>
+) {
+    fun toSeriesCreditsData() = SeriesCreditsData(
+        cast = cast.map { it.toCreditData() },
+        crew = crew.map { it.toCreditData() },
+    )
+}
 
 @Serializable
 data class CreditDto(
@@ -31,12 +45,12 @@ data class CreditDto(
     val profilePath: String? = null,
     @SerialName("cast_id")
     val castId: Int? = null,
-    val character: String,
+    val character: String? = null,
     @SerialName("credit_id")
     val creditId: String,
-    val order: Int
+    val order: Int? = null
 ) {
-    val profileUrl = "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${profilePath}"
+    val profileUrl: String? get() = profilePath?.let { "${ApiConfig.TMDB_SAMPLING_IMAGE_URL}${profilePath}" }
 
     fun toCreditData() = CreditsData(
         adult = adult,

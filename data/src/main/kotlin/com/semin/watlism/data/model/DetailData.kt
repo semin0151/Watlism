@@ -1,6 +1,7 @@
 package com.semin.watlism.data.model
 
 import com.semin.watlism.domain.model.CollectionInfo
+import com.semin.watlism.domain.model.Credits
 import com.semin.watlism.domain.model.Episode
 import com.semin.watlism.domain.model.MovieDetail
 import com.semin.watlism.domain.model.Network
@@ -48,7 +49,10 @@ data class MovieDetailData(
         adult = adult,
         backdropPath = backdropPath,
         backdropUrl = backdropUrl,
-        credits = emptyList(),
+        credits = Credits(
+            cast = emptyList(),
+            crew = emptyList()
+        ),
         genres = genres.map { it.toGenre() },
         homepage = homepage,
         id = TitleId.of(id),
@@ -117,7 +121,10 @@ data class SeriesDetailData(
         adult = adult,
         backdropPath = backdropPath,
         backdropUrl = backdropUrl,
-        credits = emptyList(),
+        credits = Credits(
+            cast = emptyList(),
+            crew = emptyList()
+        ),
         createdBy = createdBy.map { it.toPerson() },
         episodeRunTime = episodeRunTime,
         firstAirDate = firstAirDate ?: "",

@@ -2,7 +2,7 @@ package com.semin.watlism.data.api.datasource
 
 import com.semin.watlism.data.api.TmdbMovieApi
 import com.semin.watlism.data.datasource.api.MovieApiDataSource
-import com.semin.watlism.data.model.CreditsData
+import com.semin.watlism.data.model.MovieCreditsData
 import com.semin.watlism.data.model.MovieDetailData
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class MovieApiDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCredits(movieId: Long): Result<List<CreditsData>> {
+    override suspend fun getCredits(movieId: Long): Result<MovieCreditsData> {
         return tmdbMovieApi.getCredits(movieId = movieId).run {
             if(isSuccessful) {
                 val body = this.body()
@@ -34,7 +34,7 @@ class MovieApiDataSourceImpl @Inject constructor(
                 if(body == null) {
                     Result.failure(IllegalStateException("Body is null."))
                 } else {
-                    Result.success(body.cast.map { it.toCreditData() })
+                    Result.success(body.toMovieCreditsData())
                 }
             } else {
                 Result.failure(HttpException(this))

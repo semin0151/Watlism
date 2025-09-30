@@ -7,7 +7,7 @@ sealed interface TitleDetail {
     val adult: Boolean
     val backdropPath: String?
     val backdropUrl: String
-    val credits: List<Credit>
+    val credits: Credits
     val directors: List<Credit>
     val genres: List<Genre>
     val homepage: String
@@ -33,7 +33,7 @@ data class MovieDetail(
     override val adult: Boolean,
     override val backdropPath: String?,
     override val backdropUrl: String,
-    override val credits: List<Credit>,
+    override val credits: Credits,
     override val genres: List<Genre>,
     override val homepage: String,
     override val id: TitleId,
@@ -61,17 +61,17 @@ data class MovieDetail(
     val video: Boolean
 ): TitleDetail {
     override val actors: List<Credit>
-        get() = credits.filter { it.role is Actor }.take(10)
+        get() = credits.cast.filter { it.role is Actor }.take(10)
 
     override val directors: List<Credit>
-        get() = credits.filter { it.role is Director }.take(10)
+        get() = credits.crew.distinctBy { it.person.id }.filter { it.role is Director }.take(10)
 }
 
 data class SeriesDetail(
     override val adult: Boolean,
     override val backdropPath: String?,
     override val backdropUrl: String,
-    override val credits: List<Credit>,
+    override val credits: Credits,
     override val genres: List<Genre>,
     override val homepage: String,
     override val id: TitleId,
@@ -105,10 +105,10 @@ data class SeriesDetail(
     val type: String,
 ): TitleDetail {
     override val actors: List<Credit>
-        get() = credits.filter { it.role is Actor }.take(10)
+        get() = credits.cast.filter { it.role is Actor }.take(10)
 
     override val directors: List<Credit>
-        get() = credits.filter { it.role is Director }.take(10)
+        get() = credits.crew.distinctBy { it.person.id }.filter { it.role is Director }.take(10)
 }
 
 data class ProductionCompany(
