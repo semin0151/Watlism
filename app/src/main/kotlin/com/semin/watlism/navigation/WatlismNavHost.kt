@@ -5,6 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.semin.watlism.feature.home.HomeRoute
 import com.semin.watlism.feature.home.homeScreen
+import com.semin.watlism.feature.search.navigateToSearch
+import com.semin.watlism.feature.search.searchScreen
 import com.semin.watlism.feature.titledetail.navigateToTitleDetail
 import com.semin.watlism.feature.titledetail.titleDetailScreen
 
@@ -23,9 +25,14 @@ fun WatlismNavHost(
         homeScreen(
             onTitleClick = { titleId, titleType ->
                 navigationController.navigateToTitleDetail(titleId, titleType)
+            },
+            onSearchClick = {
+                navigationController.navigateToSearch()
             }
         )
 
         titleDetailScreen()
+
+        searchScreen()
     }
 }
