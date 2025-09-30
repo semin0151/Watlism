@@ -29,10 +29,11 @@ class TitleDetailViewModel @Inject constructor(
     )
     val uiState: StateFlow<TitleDetailUiState> = _uiState.asStateFlow()
 
-    fun test(
+    fun syncData(
         titleId: TitleId,
         titleType: TitleType
     ) {
+        Logs.e("syncData: $titleId, $titleType")
         getDetailUseCase(titleId, titleType)
             .onEach { titleDetail -> _uiState.update { it.copy(titleDetail = titleDetail) } }
             .catch { Logs.e("catch:${it}") }

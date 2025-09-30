@@ -67,7 +67,7 @@ fun TitleDetailScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.test(titleId, titleType)
+        viewModel.syncData(titleId, titleType)
     }
 
     uiState.titleDetail?.let {
